@@ -106,7 +106,33 @@ class LinkedList:
 
         return count
 
+    def __iter__(self):
+        #make class iterator protocol compliant to be used
+        #as a Python container just like native lists so
+        #you can write it like: [for node in linkedList] in loops
+        node = self.head
+        while node:
+            yield node.value
+            node = node.next
 
+    def __repr__(self):
+        #this is called when print object directly for basic understanding of object
+        return str([v for v in self])
+
+    def reversed(self):
+        """
+        Reverse the inputted linked list
+
+        Args:
+           linked_list(obj): Linked List to be reversed
+        Returns:
+           obj: Reveresed Linked List
+        """
+        new_linked_list = LinkedList()
+        for node in self:
+            new_linked_list.prepend(node)
+
+        return new_linked_list
 
 
 def test_linked_list_basic():
@@ -180,3 +206,13 @@ def test_comprehensive():
     # Test size
     assert linked_list.size() == 5, f"list contents: {linked_list.to_list()}"
 test_comprehensive()
+
+def test_ls_reversed():
+    llist = LinkedList()
+    for value in [4,2,5,1,-3,0]:
+        llist.append(value)
+
+    flipped = llist.reversed()
+    is_correct = list(flipped) == list([0,-3,1,5,2,4]) and list(llist) == list(flipped.reversed())
+    print("Pass" if is_correct else "Fail")
+test_ls_reversed()
