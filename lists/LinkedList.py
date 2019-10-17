@@ -96,6 +96,16 @@ class LinkedList:
         else: #the required position is greater than current length
             node.next = Node(value)
 
+    def size(self):
+        """ Return the size or length of the linked list. """
+        count = 0
+        node = self.head
+        while node:
+            count += 1
+            node = node.next
+
+        return count
+
 
 
 
@@ -164,6 +174,9 @@ def test_comprehensive():
     linked_list.insert(2, 1)
     assert linked_list.to_list() == [5, 2, 1, 4], f"list contents: {linked_list.to_list()}"
     linked_list.insert(3, 6)
-    print(linked_list.to_list())
+
     assert linked_list.to_list() == [5, 2, 1, 4, 3], f"list contents: {linked_list.to_list()}"
+
+    # Test size
+    assert linked_list.size() == 5, f"list contents: {linked_list.to_list()}"
 test_comprehensive()
