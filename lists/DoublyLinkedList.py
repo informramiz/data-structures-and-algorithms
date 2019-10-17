@@ -20,23 +20,31 @@ class DoublyLinkedList:
         self.tail.next = new_node
         self.tail = self.tail.next
 
+    def to_list(self):
+        #Write a function to convert DoublyLinkedList to Python list
+        list = []
+        node = self.head
+        while node:
+            list.append(node.value)
+            node = node.next
+
+        return list
+
+    def to_list_reverse(self):
+        list = []
+        node = self.tail
+        while node:
+            list.append(node.value)
+            node = node.previous
+
+        return list
+
 def test_double_linked_list_append():
     linked_list = DoublyLinkedList()
     linked_list.append(1)
     linked_list.append(-2)
     linked_list.append(4)
 
-    forward_list = []
-    node = linked_list.head
-    while node:
-        forward_list.append(node.value)
-        node = node.next
-    assert(forward_list == [1, -2, 4])
-
-    backward_list = []
-    node = linked_list.tail
-    while node:
-        backward_list.append(node.value)
-        node = node.previous
-    assert(backward_list == [4, -2, 1])
+    assert(linked_list.to_list() == [1, -2, 4])
+    assert(linked_list.to_list_reverse() == [4, -2, 1])
 test_double_linked_list_append()
