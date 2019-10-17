@@ -39,6 +39,7 @@ class LinkedList:
         self.head = new_node
 
     def search(self, value):
+        """ Search the linked list for a node with the requested value and return the node. """
         node = self.head
         while node:
             if node.value == value:
@@ -47,6 +48,7 @@ class LinkedList:
         return node
 
     def remove(self, value):
+        """ Remove first occurrence of value. """
         if self.head.value == value:
             self.head = self.head.next
             return
@@ -57,6 +59,16 @@ class LinkedList:
 
         if node.next:
             node.next = node.next.next
+
+    def pop(self):
+        """ Return the first node's value and remove it from the list. """
+        if self.head:
+            value = self.head.value
+            self.head = self.head.next
+            return value
+
+        return None
+
 
 def test_linked_list_basic():
     linked_list = LinkedList()
@@ -111,4 +123,9 @@ def test_comprehensive():
     assert linked_list.to_list() == [2, 1, 4, 3], f"list contents: {linked_list.to_list()}"
     linked_list.remove(3)
     assert linked_list.to_list() == [2, 1, 4], f"list contents: {linked_list.to_list()}"
+
+    # Test pop
+    value = linked_list.pop()
+    assert value == 2, f"list contents: {linked_list.to_list()}"
+    assert linked_list.head.value == 1, f"list contents: {linked_list.to_list()}"
 test_comprehensive()
