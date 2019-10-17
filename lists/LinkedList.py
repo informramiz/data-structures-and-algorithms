@@ -45,7 +45,7 @@ class LinkedList:
             if node.value == value:
                 return node
             node = node.next
-        return node
+        return None
 
     def remove(self, value):
         """ Remove first occurrence of value. """
