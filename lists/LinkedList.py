@@ -43,6 +43,7 @@ class LinkedList:
         while node:
             if node.value == value:
                 return node
+            node = node.next
         return node
 
 def test_linked_list_basic():
