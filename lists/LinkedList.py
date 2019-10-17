@@ -38,6 +38,13 @@ class LinkedList:
         new_node.next = self.head
         self.head = new_node
 
+    def search(self, value):
+        node = self.head
+        while node:
+            if node.value == value:
+                return node
+        return node
+
 def test_linked_list_basic():
     linked_list = LinkedList()
     linked_list.append(1)
@@ -60,7 +67,7 @@ def test_linked_list_to_python_list():
     print ("Pass" if  (linked_list.to_list() == [3, 2, -1, 0.2]) else "Fail")
 test_linked_list_to_python_list()
 
-def test_ls_prepend():
+def test_comprehensive():
     # Test prepend
     linked_list = LinkedList()
     linked_list.prepend(1)
@@ -68,4 +75,19 @@ def test_ls_prepend():
     linked_list.append(3)
     linked_list.prepend(2)
     assert linked_list.to_list() == [2, 1, 3], f"list contents: {linked_list.to_list()}"
-test_ls_prepend()
+
+    # Test append
+    linked_list = LinkedList()
+    linked_list.append(1)
+    assert linked_list.to_list() == [1], f"list contents: {linked_list.to_list()}"
+    linked_list.append(3)
+    assert linked_list.to_list() == [1, 3], f"list contents: {linked_list.to_list()}"
+
+    # Test search
+    linked_list.prepend(2)
+    linked_list.prepend(1)
+    linked_list.append(4)
+    linked_list.append(3)
+    assert linked_list.search(1).value == 1, f"list contents: {linked_list.to_list()}"
+    assert linked_list.search(4).value == 4, f"list contents: {linked_list.to_list()}"
+test_comprehensive()
