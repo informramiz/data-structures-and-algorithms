@@ -46,6 +46,18 @@ class LinkedList:
             node = node.next
         return node
 
+    def remove(self, value):
+        if self.head.value == value:
+            self.head = self.head.next
+            return
+
+        node = self.head
+        while node.next and node.next.value != value:
+            node = node.next
+
+        if node.next:
+            node.next = node.next.next
+
 def test_linked_list_basic():
     linked_list = LinkedList()
     linked_list.append(1)
@@ -91,4 +103,12 @@ def test_comprehensive():
     linked_list.append(3)
     assert linked_list.search(1).value == 1, f"list contents: {linked_list.to_list()}"
     assert linked_list.search(4).value == 4, f"list contents: {linked_list.to_list()}"
+
+    # Test remove
+    linked_list.remove(1)
+    assert linked_list.to_list() == [2, 1, 3, 4, 3], f"list contents: {linked_list.to_list()}"
+    linked_list.remove(3)
+    assert linked_list.to_list() == [2, 1, 4, 3], f"list contents: {linked_list.to_list()}"
+    linked_list.remove(3)
+    assert linked_list.to_list() == [2, 1, 4], f"list contents: {linked_list.to_list()}"
 test_comprehensive()
