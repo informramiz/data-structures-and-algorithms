@@ -69,6 +69,35 @@ class LinkedList:
 
         return None
 
+    def insert(self, value, index):
+        """ Insert value at pos position in the list. If pos is larger than the
+            length of the list, append to the end of the list.
+        """
+
+        #take care of the head case first
+        if index == 0:
+            self.prepend(value)
+            return
+        elif self.head == None: #list empty
+            self.head = Node(value)
+            return
+
+        current_index = 0
+        node = self.head
+        #stop when either list ends or right before the required position node
+        while node.next and current_index < index-1:
+            node = node.next
+            current_index += 1
+
+        if node.next:
+            new_node = Node(value)
+            new_node.next = node.next
+            node.next = new_node
+        else: #the required position is greater than current length
+            node.next = Node(value)
+
+
+
 
 def test_linked_list_basic():
     linked_list = LinkedList()
@@ -128,4 +157,13 @@ def test_comprehensive():
     value = linked_list.pop()
     assert value == 2, f"list contents: {linked_list.to_list()}"
     assert linked_list.head.value == 1, f"list contents: {linked_list.to_list()}"
+
+    # Test insert
+    linked_list.insert(5, 0)
+    assert linked_list.to_list() == [5, 1, 4], f"list contents: {linked_list.to_list()}"
+    linked_list.insert(2, 1)
+    assert linked_list.to_list() == [5, 2, 1, 4], f"list contents: {linked_list.to_list()}"
+    linked_list.insert(3, 6)
+    print(linked_list.to_list())
+    assert linked_list.to_list() == [5, 2, 1, 4, 3], f"list contents: {linked_list.to_list()}"
 test_comprehensive()
