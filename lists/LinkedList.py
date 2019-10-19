@@ -163,16 +163,16 @@ def is_circular(linked_list):
     fast = linked_list.head
     #as fast runner will reach end first if there is no loop so
     #adding a None check on just fast should be enough
-    while fast:
+    while fast and fast.next:
         slow = slow.next
         #move fast runner 2 times to make it fast as compared to slow runner
-        fast = fast.next
-        if fast:
-            fast = fast.next
+        fast = fast.next.next
 
-        if fast and fast == slow:
+        if fast == slow:
             return True
 
+    # If we get to a node where fast doesn't have a next node or doesn't exist itself,
+    # the list has an end and isn't circular
     return False
 
 def test_linked_list_basic():
