@@ -170,12 +170,9 @@ def is_circular(linked_list):
         if fast:
             fast = fast.next
 
-        if fast == slow:
-            break
+        if fast and fast == slow:
+            return True
 
-    #either fast is None or it is equal to slow in case of a cycle
-    if fast and fast == slow:
-        return True
     return False
 
 def test_linked_list_basic():
