@@ -2,10 +2,12 @@ class Node:
     def __init__(self, value):
         self.value = value
         self.next = None
+    def __repr__(self):
+        return str(self.value)
 
 class LinkedList:
-    def __init__(self, init_list = None):
-        self.head = None
+    def __init__(self, init_list = None, head = None):
+        self.head = head
         if init_list:
             for value in init_list:
                 self.append(value)
