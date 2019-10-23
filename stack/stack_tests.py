@@ -30,3 +30,16 @@ def test_stack_pop():
 
 
 test_stack_pop()
+
+
+def test_stack_top():
+    foo_stack = Stack()
+    foo_stack.push("Test1")
+    foo_stack.push("Test2")
+    top = foo_stack.top()
+    # top should remain same as before
+    top = foo_stack.top()
+    assert top == "Test2", f"top is: {top}"
+
+
+test_stack_top()

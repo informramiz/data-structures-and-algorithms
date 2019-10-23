@@ -45,3 +45,6 @@ class Stack:
         self._top -= 1
         top_value = self._array[self._top]
         return top_value
+
+    def top(self):
+        return self._array[self._top - 1]
