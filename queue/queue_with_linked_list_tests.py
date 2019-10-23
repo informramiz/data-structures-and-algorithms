@@ -1,7 +1,7 @@
 from queue_with_linked_list import Queue
 
 
-def test_queue_with_array():
+def test_queue_with_linked_list_tests():
     # Setup
     q = Queue()
     q.enqueue(1)
@@ -23,4 +23,4 @@ def test_queue_with_array():
     assert (q.size() == 1)
 
 
-test_queue_with_array()
+test_queue_with_linked_list_tests()
