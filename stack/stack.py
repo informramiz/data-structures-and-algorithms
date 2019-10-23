@@ -42,11 +42,17 @@ class Stack:
         return len(self._array)
 
     def pop(self):
+        if self.is_empty():
+            return None
+
         self._top -= 1
         top_value = self._array[self._top]
         return top_value
 
     def top(self):
+        if self.is_empty():
+            return None
+
         return self._array[self._top - 1]
 
     def is_empty(self):
