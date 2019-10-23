@@ -18,7 +18,7 @@ class Queue:
     def enqueue(self, data):
         if self.size() == len(self._array):
             self._handle_capacity_full()
-            
+
         self._array[self._tail] = data
         # move tail in a circular fashion to handle case in which front is not at 0 and there
         # is empty space before front
@@ -34,13 +34,13 @@ class Queue:
         new_array = [None for _ in range(2 * len(self._array))]
         # copy the elements start from front to keep the order of elements as they were in old array
         index = 0
-        for data in self._array[self._front:]:
-            new_array[index] = data
+        for i in range(self._front, len(self._array)):
+            new_array[index] = self._array[i]
             index += 1
 
         # as front can wrap around to go to start of array as well so now handle that case
-        for data in self._array[0:self._front]:
-            new_array[index] = data
+        for i in range(0, self._front):
+            new_array[index] = self._array[i]
             index += 1
 
         self._array = new_array
