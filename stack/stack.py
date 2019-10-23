@@ -12,6 +12,7 @@ is_empty - returns True if the stack is empty and False otherwise
 class Stack:
     def __init__(self, initial_size = 10):
         self._array = [None for _ in range(initial_size)]
+        # always point to the position where the next element will be inserted
         self._top = 0
 
     def _handle_stack_capacity_full(self):
@@ -39,3 +40,8 @@ class Stack:
 
     def capacity(self):
         return len(self._array)
+
+    def pop(self):
+        self._top -= 1
+        top_value = self._array[self._top]
+        return top_value
