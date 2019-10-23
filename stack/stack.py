@@ -48,3 +48,6 @@ class Stack:
 
     def top(self):
         return self._array[self._top - 1]
+
+    def is_empty(self):
+        return self._top == 0

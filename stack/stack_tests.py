@@ -43,3 +43,15 @@ def test_stack_top():
 
 
 test_stack_top()
+
+
+def test_stack_is_empty():
+    foo_stack = Stack()
+    foo_stack.push("Test1")
+    foo_stack.push("Test2")
+    foo_stack.pop()
+    foo_stack.pop()
+    assert foo_stack.is_empty() is True
+
+
+test_stack_is_empty()
