@@ -37,7 +37,7 @@ class BST:
             if current_node.left:
                 queue.enqueue((current_node.left, level + 1))
             if current_node.right:
-                queue.enqueue((current_node, level + 1))
+                queue.enqueue((current_node.right, level + 1))
 
         return visit_order
 
@@ -54,3 +54,31 @@ class BST:
             previous_level = level
 
         return string
+
+    def insert(self, value):
+        if self.root is None:
+            self.root = Node(value)
+            return
+
+        node = self.root
+        while node:
+            if value == node.value:
+                # ignore duplicates
+                break
+            elif value >= node.value:
+                # go right
+                if node.right:
+                    node = node.right
+                else:
+                    # there is no right node so just insert new node here
+                    node.right = Node(value)
+                    break
+            else:
+                # go left
+                if node.left:
+                    node = node.left
+                else:
+                    # there is no left node so insert it here
+                    node.left = Node(value)
+                    break
+
