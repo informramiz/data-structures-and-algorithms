@@ -82,3 +82,21 @@ class BST:
                     node.left = Node(value)
                     break
 
+    def is_empty(self):
+        return self.root is None
+
+    def search(self, value):
+        node = self.root
+        while node:
+            if value == node.value:
+                return True
+
+            if value >= node.value:
+                # go right
+                node = node.right
+            else:
+                # go left
+                node = node.left
+
+        return False
+
