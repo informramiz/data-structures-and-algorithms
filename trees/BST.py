@@ -100,3 +100,15 @@ class BST:
 
         return False
 
+    def pre_order_traversal(self):
+        return self._pre_order_traversal(self.root)
+
+    def _pre_order_traversal(self, node):
+        output = [node.value]
+        if node.left:
+            output += self._pre_order_traversal(node.left)
+        if node.right:
+            output += self._pre_order_traversal(node.right)
+
+        return output
+
