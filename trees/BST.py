@@ -86,10 +86,13 @@ class BST:
         return self.root is None
 
     def search(self, value):
+        return self.__search(value) is not None
+
+    def __search(self, value):
         node = self.root
         while node:
             if value == node.value:
-                return True
+                return node
 
             if value >= node.value:
                 # go right
@@ -98,7 +101,7 @@ class BST:
                 # go left
                 node = node.left
 
-        return False
+        return None
 
     def pre_order_traversal(self):
         return self._pre_order_traversal(self.root)
@@ -143,4 +146,6 @@ class BST:
         # parent after between
         output += [node.value]
         return output
+
+
 
