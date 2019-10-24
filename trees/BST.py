@@ -104,11 +104,28 @@ class BST:
         return self._pre_order_traversal(self.root)
 
     def _pre_order_traversal(self, node):
+        #parent first order
         output = [node.value]
         if node.left:
             output += self._pre_order_traversal(node.left)
         if node.right:
             output += self._pre_order_traversal(node.right)
+
+        return output
+
+    def in_order_traversal(self):
+        return self._in_order_traversal(self.root)
+
+    def _in_order_traversal(self, node):
+        output = []
+        if node.left:
+            output += self._in_order_traversal(node.left)
+
+        # parent in between
+        output += [node.value]
+
+        if node.right:
+            output += self._in_order_traversal(node.right)
 
         return output
 

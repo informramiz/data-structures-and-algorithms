@@ -32,4 +32,9 @@ def test_BST():
     pre_order_actual = bst.pre_order_traversal()
     assert_(pre_order_expected, pre_order_actual)
 
+    # Test In-Order Traversal
+    in_order_expected = [0, 1, 2, 3]
+    in_order_actual = bst.in_order_traversal()
+    assert_(in_order_expected, in_order_actual)
+
 test_BST()
