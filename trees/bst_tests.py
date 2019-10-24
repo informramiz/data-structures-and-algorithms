@@ -37,4 +37,9 @@ def test_BST():
     in_order_actual = bst.in_order_traversal()
     assert_(in_order_expected, in_order_actual)
 
+    # Test Post-Order Traversal
+    post_order_expected = [0, 1, 3, 2]
+    post_order_actual = bst.post_order_traversal()
+    assert_(post_order_expected, post_order_actual)
+
 test_BST()

@@ -129,3 +129,18 @@ class BST:
 
         return output
 
+    def post_order_traversal(self):
+        return self._post_order_traversal(self.root)
+
+    def _post_order_traversal(self, node):
+        output = []
+        if node.left:
+            output += self._post_order_traversal(node.left)
+
+        if node.right:
+            output += self._post_order_traversal(node.right)
+
+        # parent after between
+        output += [node.value]
+        return output
+
