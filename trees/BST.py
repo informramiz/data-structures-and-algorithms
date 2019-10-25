@@ -65,7 +65,7 @@ class BST:
             if value == node.value:
                 # ignore duplicates
                 break
-            elif value >= node.value:
+            elif value > node.value:
                 # go right
                 if node.right:
                     node = node.right
@@ -146,6 +146,45 @@ class BST:
         # parent after between
         output += [node.value]
         return output
+
+    def delete(self, value):
+        self.__delete_node(self.root, value)
+
+    def __delete_node(self, current_node, value):
+        if current_node is None:
+            return current_node
+
+        if value < current_node.value:
+            # go left
+            current_node.left = self.__delete_node(current_node.left, value)
+        elif value > current_node.value:
+            current_node.right = self.__delete_node(current_node.right, value)
+        else:
+            # current node is the node to delete
+            # case-1: No children, it will be handled automatically in case-2
+
+            # case-2: Only one child
+            if current_node.left is None:
+                # delete this node and make the right child this node as there is no left child to take care of
+                current_node = current_node.right
+            elif current_node.right is None:
+                # delete this node and make the left child this node as there is no right child to take care of
+                current_node = current_node.left
+            else: # case-3: has two children
+                # find the right child (so that it is greater than current_node.value) of current_node
+                # with minimum value as that will be the rightful successor
+                min_value_node = self.__min_value_node(current_node.right)
+                current_node.value = min_value_node.value
+                # delete min_value_node the same way we deleted current_node
+                current_node.right = self.__delete_node(current_node.right, min_value_node.value)
+
+        return current_node
+
+    def __min_value_node(self, node):
+        if node.left is None:
+            return node
+
+        return self.__min_value_node(node.left)
 
 
 
