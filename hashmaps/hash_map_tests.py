@@ -18,5 +18,8 @@ def test_hash_map():
     output = hash_map.get(key)
     assert_(value, output)
 
+    # Test size
+    assert_(1, hash_map.size())
+
 
 test_hash_map()

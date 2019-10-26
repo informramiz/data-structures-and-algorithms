@@ -74,3 +74,6 @@ class HashMap:
 
         # compress hash code to bring it in range [0, len(array)-1]
         return hash_code % len(self.array)
+
+    def size(self):
+        return self.entries_count
