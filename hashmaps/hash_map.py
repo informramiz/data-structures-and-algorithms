@@ -48,6 +48,8 @@ class HashMap:
         else:
             key_node.value = value
 
+        self.entries_count += 1
+
     def get(self, key):
         bucket_index = self.get_bucket_index(key)
         linked_list_node = self.array[bucket_index].search(MapNode(key, None))
