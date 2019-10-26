@@ -21,17 +21,44 @@ a special name to arrays for this purpose. Each entry in this bucket array is ca
 """
 
 
+from lists.LinkedList import LinkedList
+
+
+class MapNode(object):
+    def __init__(self, key = None, value = None):
+        self.key = key
+        self.value = value
+
+    def __eq__(self, other):
+        return isinstance(other, MapNode) and self.key == other.key
+
+
 class HashMap:
     def __init__(self, initial_size = 10):
-        self.array = [None for _ in range(initial_size)]
+        self.array = [LinkedList() for _ in range(initial_size)]
         self.entries_count = 0
         self.prime = 37
 
     def put(self, key, value):
-        pass
+        bucket_index = self.get_bucket_index(key)
+        bucket = self.array[bucket_index]
+        key_node = bucket.search(MapNode(key, value))
+        if key_node is None:
+            bucket.append(MapNode(key, value))
+        else:
+            key_node.value = value
 
     def get(self, key):
-        pass
+        bucket_index = self.get_bucket_index(key)
+        linked_list_node = self.array[bucket_index].search(MapNode(key, None))
+        if linked_list_node is not None:
+            map_node = linked_list_node.value
+            return map_node.value
+        else:
+            return None
+
+    def get_bucket_index(self, key):
+        return self.get_hash_code(key)
 
     def get_hash_code(self, key):
         key = str(key)
