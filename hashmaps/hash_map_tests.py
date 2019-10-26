@@ -9,7 +9,7 @@ def test_hash_map():
     expected = 4
     input = "abcd"
     actual = hash_map.get_hash_code(input)
-    assert(expected == actual)
+    assert_(expected, actual)
 
     # Test HashMap get and put
     key = "abcde"
@@ -20,6 +20,12 @@ def test_hash_map():
 
     # Test size
     assert_(1, hash_map.size())
+
+    # delete
+    hash_map.delete("abcde")
+    assert_(0, hash_map.size())
+
+    print("All Tests Passed!")
 
 
 test_hash_map()

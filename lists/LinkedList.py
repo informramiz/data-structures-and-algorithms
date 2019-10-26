@@ -56,7 +56,7 @@ class LinkedList:
         """ Remove first occurrence of value. """
         if self.head.value == value:
             self.head = self.head.next
-            return
+            return True
 
         node = self.head
         while node.next and node.next.value != value:
@@ -64,6 +64,10 @@ class LinkedList:
 
         if node.next:
             node.next = node.next.next
+            return True
+
+        # Node not found
+        return False
 
     def pop(self):
         """ Return the first node's value and remove it from the list. """

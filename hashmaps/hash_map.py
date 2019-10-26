@@ -52,12 +52,19 @@ class HashMap:
 
     def get(self, key):
         bucket_index = self.get_bucket_index(key)
-        linked_list_node = self.array[bucket_index].search(MapNode(key, None))
+        linked_list_node = self.array[bucket_index].search(MapNode(key))
         if linked_list_node is not None:
             map_node = linked_list_node.value
             return map_node.value
         else:
             return None
+
+    def delete(self, key):
+        bucket_index = self.get_bucket_index(key)
+        is_deleted = self.array[bucket_index].remove(MapNode(key))
+        if is_deleted:
+            self.entries_count -= 1
+        return is_deleted
 
     def get_bucket_index(self, key):
         return self.get_hash_code(key)
