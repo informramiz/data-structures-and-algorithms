@@ -18,39 +18,31 @@ from lists.LinkedList import Node
 def skip_i_delete_j(head: Node, i, j):
     if head is None or j <= 0:
         return head
+    elif i <= 0:
+        return None
 
     current_node = head
-    new_head = None
-    new_tail = None
-    count = 0
-    is_skip_done = False
     while current_node:
-        if not is_skip_done and count >= i:
-            # i nodes are skipped, reset counter and mark is_skip_done as True
-            is_skip_done = True
-            count = 0
-        elif is_skip_done and count >= j:
-            # j nodes are ignored/deleted so reset counter and skip flag
-            count = 0
-            is_skip_done = False
+        # skip (i-1) nodes, (i-1) because current_node is already pointing to a proper node so 1 node is already skipped
+        for _ in range(i-1):
+            if current_node is None:
+                return head
+            current_node = current_node.next
 
-        if not is_skip_done and count < i:
-            # if i not node are not skipped yet, then keep them as part of new_head
-            if new_tail:
-                new_tail.next = current_node
-                new_tail = new_tail.next
-            else:
-                new_head = current_node
-                new_tail = current_node
-
+        previous_node = current_node
+        # skip the next j nodes
         current_node = current_node.next
-        count += 1
+        for _ in range(j):
+            if current_node is None:
+                # make sure list is ending with the last node pointing to None
+                previous_node.next = None
+                return head
+            current_node = current_node.next
 
-    # it is possible that the end of new_head, new_tail is not None so set it to None
-    if new_tail:
-        new_tail.next = None
+        # connect previous i-node with (j+1)th node after skipping j nodes
+        previous_node.next = current_node
 
-    return new_head
+    return head
 
 
 def test_case(inputt, i, j, expected_output):
@@ -85,5 +77,9 @@ def test():
     solution = [1, 2]
     test_case(arr, i, j, solution)
 
-
+    arr = [1, 2, 3, 4, 5]
+    i = 0
+    j = 4
+    solution = []
+    test_case(arr, i, j, solution)
 test()
