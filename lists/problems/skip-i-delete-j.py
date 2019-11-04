@@ -82,4 +82,6 @@ def test():
     j = 4
     solution = []
     test_case(arr, i, j, solution)
+
+    
 test()
