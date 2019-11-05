@@ -30,6 +30,24 @@ def reverse_stack_using_queue(stack: Stack):
     return stack
 
 
+def reverse_stack_using_recursion(stack: Stack):
+    holder_stack = Stack()
+    while not stack.is_empty():
+        holder_stack.push(stack.pop())
+
+    _reverse_stack_using_recursion(stack, holder_stack)
+    return stack
+
+
+def _reverse_stack_using_recursion(stack: Stack, holder_stack: Stack):
+    if holder_stack.is_empty():
+        return
+
+    top = holder_stack.pop()
+    _reverse_stack_using_recursion(stack, holder_stack)
+    stack.push(top)
+
+
 def build_stack(arr):
     stack = Stack()
     for value in arr:
@@ -53,3 +71,14 @@ def test_reverse_stack():
 
 
 test_reverse_stack()
+
+
+def test_reverse_stack_using_recursion():
+    output = reverse_stack_using_recursion(build_stack([1, 2, 3, 4]))
+    assert_([4, 3, 2, 1], stack_to_list(output))
+
+    output = reverse_stack_using_recursion(build_stack([1]))
+    assert_([1], stack_to_list(output))
+
+
+test_reverse_stack_using_recursion()
