@@ -30,7 +30,7 @@ def evaluate_operator(left_operand, right_operand, operator):
         return left_operand + right_operand
     elif operator == '-':
         return left_operand - right_operand
-    elif operator == 'x':
+    elif operator == '*':
         return left_operand * right_operand
     else:
         return int(left_operand / right_operand)
