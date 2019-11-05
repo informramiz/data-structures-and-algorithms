@@ -45,3 +45,53 @@ def test_evaluate_operator():
 
 
 test_evaluate_operator()
+
+
+def is_operator(operator):
+    return operator in "+-*/"
+
+
+def test_is_operator():
+    assert_(True, is_operator("-"))
+    assert_(False, is_operator("8"))
+
+
+test_is_operator()
+
+
+def evaluate_post_fix(input_list):
+    """
+    Evaluate the postfix expression to find the answer
+
+    Args:
+       input_list(list): List containing the postfix expression
+    Returns:
+       int: Postfix expression solution
+    """
+    stack = Stack()
+    for value in input_list:
+        if not is_operator(value):
+            stack.push(value)
+        else:
+            # get the most recent two operands
+            right_operand = stack.pop()
+            left_operator = stack.pop()
+            # apply the current operator on the operands
+            output = evaluate_operator(left_operator, right_operand, value)
+            # push the result back to stack for further evaluation for future operators
+            stack.push(output)
+    return stack.pop()
+
+
+def test_evaluate_post_fix():
+    test_case = (["3", "1", "+", "4", "*"], 16)
+    assert_(test_case[1], evaluate_post_fix(test_case[0]))
+
+    test_case = (["4", "13", "5", "/", "+"], 6)
+    assert_(test_case[1], evaluate_post_fix(test_case[0]))
+
+    test_case = (["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"], 22)
+    assert_(test_case[1], evaluate_post_fix(test_case[0]))
+
+
+test_evaluate_post_fix()
