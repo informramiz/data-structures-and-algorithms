@@ -37,3 +37,21 @@ def binary_search_iterative(array, key):
 
     return -1
 
+
+def binary_search_recursive(array, key):
+    return _binary_search_recursive(array, key, 0, len(array)-1)
+
+
+def _binary_search_recursive(array, key, start_index, end_index):
+    if start_index > end_index:
+        return -1
+
+    mid = (start_index + end_index) // 2
+    if array[mid] == key:
+        return key
+    elif key < array[mid]:
+        # key is in first half
+        return _binary_search_recursive(array, key, start_index, end_index-1)
+    else:
+        # key is in second half
+        return _binary_search_recursive(array, key, start_index+1, end_index)
