@@ -1,5 +1,5 @@
-from basicalgorithms.binary_search import binary_search_iterative
-from basicalgorithms.binary_search import binary_search_recursive
+from basicalgorithms.binarysearch.binary_search import binary_search_iterative
+from basicalgorithms.binarysearch.binary_search import binary_search_recursive
 from asserts.asserts import assert_
 
 
