@@ -25,7 +25,7 @@ def binary_search_iterative(array, key):
     end = len(array)-1
 
     while start <= end:
-        mid = (start + end)
+        mid = (start + end) // 2
         if array[mid] == key:
             return mid
         elif key < array[mid]:
