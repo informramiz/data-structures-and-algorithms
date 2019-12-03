@@ -20,10 +20,7 @@ If the target value is not present in the array, return -1.
 """
 
 
-def binary_search_iterative(array, key):
-    start = 0
-    end = len(array)-1
-
+def binary_search_iterative_bounded(array, key, start, end):
     while start <= end:
         mid = (start + end) // 2
         if array[mid] == key:
@@ -36,6 +33,12 @@ def binary_search_iterative(array, key):
             start = mid + 1
 
     return -1
+
+
+def binary_search_iterative(array, key):
+    start = 0
+    end = len(array) - 1
+    return binary_search_iterative_bounded(array, key, start, end)
 
 
 def binary_search_recursive(array, key):
