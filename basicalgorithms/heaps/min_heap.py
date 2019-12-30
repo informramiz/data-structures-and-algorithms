@@ -42,11 +42,22 @@ class MinHeap(object):
         return (child_index - 1) // 2
 
     def insert(self, data):
-        # TODO: Handle out of capacity situation
         self.array[self.next_index] = data
         parent_index = MinHeap.child_to_parent_index(self.next_index)
         self.__heapify_up(parent_index)
         self.next_index += 1
+        if self.next_index == self.capacity:
+            self.__handle_out_of_capacity()
+
+    def __handle_out_of_capacity(self):
+        # double the capacity
+        self.capacity *= 2
+
+        # copy old elements into new array
+        temp = self.array
+        self.array = [None for _ in range(self.capacity)]
+        for index in range(self.next_index):
+            self.array[index] = temp[index]
 
     def __heapify_up(self, parent_index):
         while parent_index > 0:
