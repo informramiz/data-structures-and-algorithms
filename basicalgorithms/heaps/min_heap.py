@@ -27,6 +27,7 @@ If it's a max heap, it should satisfy the heap order property for max heaps.
 
 class MinHeap(object):
     def __init__(self, initial_size: int):
+        self.capacity = initial_size
         # complete binary tree holder array
         self.array = [None for _ in range(initial_size)]
         # next index to insert item on
@@ -41,6 +42,7 @@ class MinHeap(object):
         return (child_index - 1) // 2
 
     def insert(self, data):
+        # TODO: Handle out of capacity situation
         self.array[self.next_index] = data
         parent_index = MinHeap.child_to_parent_index(self.next_index)
         self.__heapify_up(parent_index)
@@ -67,6 +69,67 @@ class MinHeap(object):
 
             # verify the parent of current parent to check if heapify is needed
             parent_index = MinHeap.child_to_parent_index(parent_index)
+
+    def peek(self):
+        if self.is_empty():
+            return None
+        return self.array[self.next_index-1]
+
+    def remove(self):
+        """
+        Remove and return the element at the top of the heap
+        """
+
+        # swap first and last elements
+        last_element = self.array[self.next_index-1]
+        self.array[self.next_index-1] = self.array[0]
+        self.array[0] = last_element
+
+        # now delete the last element
+        self.next_index -= 1
+        self.array[self.next_index] = None
+
+        # now make sure heap order property is correct
+        self.__down_heapify()
+
+        return last_element
+
+    def __down_heapify(self):
+        parent_index = 0
+        while parent_index is not None:
+            left_child_index = MinHeap.parent_to_left_child_index(parent_index)
+            right_child_index = left_child_index + 1
+
+            parent = self.array[parent_index]
+            if left_child_index >= self.capacity or self.array[left_child_index] is None:
+                # the parent has no children so we are done with heapify
+                break
+            elif self.array[left_child_index] < parent:
+                # left child is smaller than parent so swap
+                self.array[parent_index] = self.array[left_child_index]
+                self.array[left_child_index] = parent
+                # now check the children of the left child
+                parent_index = left_child_index
+            elif right_child_index < self.capacity and self.array[right_child_index] is not None:
+                # the right child is smaller than parent so swap
+                if self.array[right_child_index] < parent:
+                    self.array[parent_index] = self.array[right_child_index]
+                    self.array[right_child_index] = parent
+                    # now check the children of the right child
+                    parent_index = left_child_index
+                else:
+                    # parent is smaller than both left and right children so heap order property is fine now, no
+                    # need to heapify any further
+                    break
+            else:
+                # there are no more children to check
+                break
+
+    def size(self):
+        return self.next_index
+
+    def is_empty(self):
+        return self.size() == 0
 
     def to_list(self):
         return [v for v in self.array if v is not None]

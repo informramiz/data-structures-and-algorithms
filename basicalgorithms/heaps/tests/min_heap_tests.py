@@ -9,5 +9,8 @@ def tests():
     min_heap.insert(2)
     assert_(expected=[1, 3, 2], actual=min_heap.to_list())
 
+    min_heap.remove()
+    assert_(expected=[2, 3], actual=min_heap.to_list())
+
 
 tests()
