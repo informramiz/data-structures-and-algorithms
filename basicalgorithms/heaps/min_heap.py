@@ -80,6 +80,9 @@ class MinHeap(object):
         Remove and return the element at the top of the heap
         """
 
+        if self.is_empty():
+            return None
+
         # swap first and last elements
         last_element = self.array[self.next_index-1]
         self.array[self.next_index-1] = self.array[0]
