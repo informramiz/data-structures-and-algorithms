@@ -85,5 +85,21 @@ class RedBlackTree(object):
 
         return string
 
+    def in_order_traversal(self):
+        return self.__in_order_traversal(self.root)
+
+    def __in_order_traversal(self, node):
+        if node is None:
+            return []
+
+        output = []
+        if node.left is not None:
+            output += self.__in_order_traversal(node.left)
+        output += [node.value]
+        if node.right is not None:
+            output += self.__in_order_traversal(node.right)
+
+        return output
+
     def search(self, value):
         pass
