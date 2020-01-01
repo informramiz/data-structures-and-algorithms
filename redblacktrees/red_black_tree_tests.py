@@ -14,5 +14,13 @@ def tests():
     in_order_actual = tree.in_order_traversal()
     assert_(in_order_expected, in_order_actual)
 
+    tree = RedBlackTree()
+    tree.insert(9)
+    tree.insert(6)
+    tree.insert(19)
+    tree.insert(13)
+    tree.insert(16)
+    print(tree)
+
 
 tests()
