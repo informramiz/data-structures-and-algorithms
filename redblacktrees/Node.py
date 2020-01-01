@@ -15,4 +15,4 @@ class Node(object):
         self.right = None
 
     def __repr__(self):
-        return f"Node({self.value}, {self.color})"
+        return f"{self.value}{self.color}"
