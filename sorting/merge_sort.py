@@ -52,8 +52,8 @@ def merge(array, start1, end1, start2, end2):
             sorted_array[i] = array[index2]
             index2 += 1
 
-    for index in sorted_array:
-        array[index] = sorted_array[index]
+    for index in range(len(sorted_array)):
+        array[start1 + index] = sorted_array[index]
 
 
 def tests():
@@ -61,5 +61,8 @@ def tests():
     merge(array, 0, 2, 3, 4)
     assert_(expected=[-1, 0, 1, 2, 3], actual=array)
 
+    array = [0, 1, 3, -1, 2]
+    merge_sort(array)
+    assert_(expected=[-1, 0, 1, 2, 3], actual=array)
 
 tests()
