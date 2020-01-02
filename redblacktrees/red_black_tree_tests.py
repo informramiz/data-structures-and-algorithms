@@ -20,7 +20,10 @@ def tests():
     tree.insert(19)
     tree.insert(13)
     tree.insert(16)
-    print(tree)
+    # print(tree)
+    in_order_expected = [6, 9, 13, 16, 19]
+    in_order_actual = tree.in_order_traversal()
+    assert_(expected=in_order_expected, actual=in_order_actual)
 
 
 tests()

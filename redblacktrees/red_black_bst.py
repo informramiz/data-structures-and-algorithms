@@ -81,22 +81,30 @@ class RedBlackTree(object):
 
         # case-4: inserted node's parent is red but it's sibling is not red and inserted node and it's parent
         # are not on the same side
+        # check if Left-Right or Right-Left case
         if RedBlackTree.__is_case4(node, grandparent):
             if node == parent.right:
-                RedBlackTree.__rotate_left(parent)
+                # Left-Right case so rotate left on parent
+                self.__rotate_left_on_parent(node)
             else:
-                RedBlackTree.__rotate_right(parent)
+                # Right-Left case so rotate right on parent
+                RedBlackTree.__rotate_right_on_parent(node)
 
-        # After applying case-4 it will be automatically eligible for case-4 so no if for case-5
-        # CASE-5: When node and it's parent are on same side of the grandparent then we apply left/right rotation
+            # after any of above rotations, node and parent roles are swapped so reflect the same in code
+            temp = parent
+            parent = node
+            node = temp
+
+        # After applying case-4 it will be automatically eligible for case-5 so apply CASE-5 as well
+        # CASE-5: When node and it's parent are on same side of the grandparent (LL or RR case)
+        # then we apply left/right rotation
         # on grandparent instead of parent
         if parent.right == node:
-            RedBlackTree.__rotate_left(grandparent)
+            # Right-Right case so rotate left on grandparent
+            RedBlackTree.__rotate_left_on_grandparent(node)
         else:
-            RedBlackTree.__rotate_right(grandparent)
-        # in CASE-5 we also swap the colors of parent and grand parent
-        parent.color = Color.BLACK
-        grandparent.color = Color.RED
+            # Left-Left case so rotate right on grandparent
+            RedBlackTree.__rotate_right_on_grandparent(node)
 
     @staticmethod
     def __grand_parent(node):
@@ -121,43 +129,94 @@ class RedBlackTree(object):
 
     @staticmethod
     def __is_case4(node, grandparent):
+        """
+        check if Left-Right or Right-Left case
+        :param node:
+        :param grandparent:
+        :return:
+        """
         parent = node.parent
         if parent == grandparent.left and node == parent.right:
+            # Left-Right case so Rotate Left on parent case
             return True
         elif parent == grandparent.right and node == parent.left:
+            # Right-Left case so Rotate Right on parent case
             return True
 
         return False
 
-    @staticmethod
-    def __rotate_left(node):
-        parent = node
-        node = parent.right
+    def __rotate_left_on_parent(self, node):
+        parent = node.parent
+        gp = parent.parent
 
-        # swap parent and node values
-        parent_value = parent.value
-        parent.value = node.value
-        node.value = parent_value
+        # make parent left child of node
+        parent.parent = node
+        parent.right = node.left
 
-        # swap left and right subtrees of parent
-        parent_left = parent.left
-        parent.left = node
-        parent.right = parent_left
+        # make node parent and son of grand parent
+        node.parent = gp
+        node.left = parent
 
     @staticmethod
-    def __rotate_right(node):
-        parent = node
-        node = parent.left
+    def __rotate_right_on_parent(node):
+        parent = node.parent
+        gp = parent.parent
 
-        # swap parent and node values
-        parent_value = parent.value
-        parent.value = node.value
-        node.value = parent_value
+        # make parent right child of node
+        parent.parent = node
+        parent.left = node.right
 
-        # swap left and right subtrees of parent
-        parent_right = parent.right
-        parent.right = node
-        parent.left = parent_right
+        # make node son of grand parent and
+        node.parent = gp
+        node.right = parent
+
+    @staticmethod
+    def __rotate_left_on_grandparent(node):
+        parent = node.parent
+        gp = parent.parent
+        ggp = gp.parent
+
+        # make grandparent left child of parent
+        gp.parent = parent
+        gp.right = parent.left
+
+        # make parent son of grand-grandparent
+        parent.parent = ggp
+        parent.left = gp
+
+        # swap colors of parent and gp
+        parent.color = Color.BLACK
+        gp.color = Color.RED
+
+        if ggp:
+            if ggp.left == gp:
+                ggp.left = parent
+            else:
+                ggp.right = parent
+
+    @staticmethod
+    def __rotate_right_on_grandparent(node):
+        parent = node.parent
+        gp = parent.parent
+        ggp = gp.parent
+
+        # make grandparent left child of parent
+        gp.parent = parent
+        gp.left = parent.right
+
+        # make parent son of grand-grandparent
+        parent.parent = ggp
+        parent.right = gp
+
+        # swap colors of parent and gp
+        parent.color = Color.BLACK
+        gp.color = Color.RED
+
+        if ggp:
+            if ggp.left == gp:
+                ggp.left = parent
+            else:
+                ggp.right = parent
 
     def BFS(self):
         if self.is_empty():
