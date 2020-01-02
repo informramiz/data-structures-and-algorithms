@@ -85,7 +85,7 @@ class RedBlackTree(object):
         if RedBlackTree.__is_case4(node, grandparent):
             if node == parent.right:
                 # Left-Right case so rotate left on parent
-                self.__rotate_left_on_parent(node)
+                RedBlackTree.__rotate_left_on_parent(node)
             else:
                 # Right-Left case so rotate right on parent
                 RedBlackTree.__rotate_right_on_parent(node)
@@ -145,7 +145,8 @@ class RedBlackTree(object):
 
         return False
 
-    def __rotate_left_on_parent(self, node):
+    @staticmethod
+    def __rotate_left_on_parent(node):
         parent = node.parent
         gp = parent.parent
 
