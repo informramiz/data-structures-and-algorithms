@@ -263,4 +263,16 @@ class RedBlackTree(object):
         return output
 
     def search(self, value):
-        pass
+        if self.is_empty():
+            return False
+
+        node = self.root
+        while node:
+            if node.value == value:
+                return True
+            elif value > node.value:
+                node = node.right
+            else:
+                node = node.left
+
+        return False

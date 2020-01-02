@@ -25,5 +25,8 @@ def tests():
     in_order_actual = tree.in_order_traversal()
     assert_(expected=in_order_expected, actual=in_order_actual)
 
-
+    assert_(expected=True, actual=tree.search(16))
+    assert_(expected=True, actual=tree.search(19))
+    assert_(expected=True, actual=tree.search(6))
+    assert_(expected=False, actual=tree.search(31))
 tests()
