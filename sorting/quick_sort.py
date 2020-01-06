@@ -23,8 +23,8 @@ def _balance_the_pivot(array, start, end):
     """
     Move all elements greater than pivot to right side of pivot and all elements less than pivot to the left side
     :param array:
-    :param i:
-    :param pivot:
+    :param start:
+    :param end:
     :return: The updated position of pivot in which array is: [elements on left <= pivot element < all elements on right]
     """
     i = start
