@@ -27,13 +27,23 @@ class Trie(object):
         """
         Check if word exists in trie
         """
+        node = self.find(word)
+        if node:
+            return node.is_word
+        else:
+            return False
+
+    def find(self, prefix):
+        """
+        Find the node with the prefix
+        """
         current_node = self.root
-        for char in word:
+        for char in prefix:
             if char not in current_node:
-                return False
+                return None
             current_node = current_node.children[char]
 
-        return current_node.is_word
+        return current_node
 
     def __repr__(self):
         return str(self.to_list(self.root, ""))
