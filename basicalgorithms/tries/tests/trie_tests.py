@@ -13,5 +13,9 @@ def test():
     assert_(True, trie.exists("add"))
     assert_(False, trie.exists("RR"))
 
+    node = trie.find("h")
+    actual = node.suffixes()
+    assert_(expected=["ello", "ey"], actual=actual)
+
 
 test()

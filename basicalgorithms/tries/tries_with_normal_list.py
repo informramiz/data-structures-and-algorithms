@@ -46,19 +46,10 @@ class Trie(object):
         return current_node
 
     def __repr__(self):
-        return str(self.to_list(self.root, ""))
+        return str(self.to_list())
 
-    def to_list(self, node, word):
-        if node is None:
+    def to_list(self):
+        if self.root is None:
             return []
-
-        words = []
-        for child_key in node:
-            child_node = node.children[child_key]
-            if child_node.is_word:
-                words.append(word + child_key)
-
-            words += (self.to_list(child_node, word + child_key))
-
-        return words
+        return self.root.suffixes()
 
