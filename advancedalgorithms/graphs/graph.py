@@ -3,8 +3,6 @@ Author: Ramiz Raja
 Created on: 22/01/2020
 """
 from advancedalgorithms.graphs.graph_node import GraphNode
-import collections
-
 
 class Graph:
     def __init__(self, nodes_list=None):
@@ -107,6 +105,28 @@ class Graph:
 
             # add next_child to the stack so that we can check it's children
             stack.append((next_child, 0))
+
+        return visited_nodes_order
+
+    def DFS_traversal_recursive(self):
+        if self.is_empty():
+            return []
+
+        return self.__DFS_traversal_recursive(self.nodes[0])
+
+    def is_empty(self):
+        return len(self.nodes) == 0
+
+    def __DFS_traversal_recursive(self, node, is_visited={}):
+        if not node:
+            return []
+
+        is_visited[node] = True
+        visited_nodes_order = [node.value]
+
+        for child in node.children:
+            if is_visited.get(child) is None:
+                visited_nodes_order += self.__DFS_traversal_recursive(child, is_visited)
 
         return visited_nodes_order
 
