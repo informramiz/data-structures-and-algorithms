@@ -36,3 +36,4 @@ class GraphNode:
 
     def __repr__(self):
         return f"Node({self.value}, {str([c.value for c in self.children])})"
+

@@ -3,6 +3,7 @@ Author: Ramiz Raja
 Created on: 22/01/2020
 """
 from advancedalgorithms.graphs.graph_node import GraphNode
+import collections
 
 
 class Graph:
@@ -29,3 +30,25 @@ class Graph:
 
     def __repr__(self):
         return str([n for n in self.nodes])
+
+    def BFS_traversal(self):
+        if len(self.nodes) == 0:
+            return []
+
+        queue = []
+        visited_nodes_order = []
+        visited = {}
+
+        root = self.nodes[0]
+        queue.append(root)
+
+        while len(queue) > 0:
+            node = queue.pop(0)
+            visited[node.value] = True
+            visited_nodes_order.append(node.value)
+
+            for child in node.children:
+                if visited.get(child.value) is None:
+                    queue.append(child)
+
+        return visited_nodes_order
