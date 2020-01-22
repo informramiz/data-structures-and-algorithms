@@ -11,16 +11,21 @@ def tests():
     nodeA = GraphNode('A')
     nodeB = GraphNode("B")
     nodeC = GraphNode("C")
+    nodeAA = GraphNode("AA")
 
     graph.add_node(nodeA)
+    graph.add_node(nodeAA)
     graph.add_node(nodeB)
     graph.add_node(nodeC)
 
     graph.add_edge(nodeA, nodeC)
-    graph.add_edge(nodeB, nodeC)
+    graph.add_edge(nodeA, nodeAA)
+    graph.add_edge(nodeC, nodeB)
 
-    assert_(expected=['A', 'C', 'B'], actual=graph.BFS_traversal())
+    assert_(expected=['A', 'C', "AA", 'B'], actual=graph.BFS_traversal())
     assert_(expected=nodeB, actual=graph.BFS_search('B'))
+
+    assert_(expected=["A", "C", "B", "AA"], actual=graph.DFS_traversal())
 
 
 tests()

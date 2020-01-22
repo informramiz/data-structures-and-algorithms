@@ -74,3 +74,38 @@ class Graph:
                     queue.append(child)
 
         return None
+
+    def DFS_traversal(self):
+        if len(self.nodes) == 0:
+            return []
+
+        stack = []
+        visited_nodes_order = []
+        is_visited = {}
+
+        root = self.nodes[0]
+        visited_nodes_order.append(root.value)
+        is_visited[root] = True
+        stack.append((root, 0))
+
+        while len(stack) > 0:
+            parent, next_child_index = stack.pop()
+
+            if next_child_index >= len(parent.children):
+                continue
+
+            # push parent current state (for backtracking) so that we can check remaining children after flow
+            # returns from checking next_child.children
+            stack.append((parent, next_child_index + 1))
+
+            next_child = parent.children[next_child_index]
+            if is_visited.get(next_child) is not None:
+                continue
+
+            visited_nodes_order.append(next_child.value)
+            is_visited[next_child] = True
+
+            # add next_child to the stack so that we can check it's children
+            stack.append((next_child, 0))
+
+        return visited_nodes_order
