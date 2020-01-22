@@ -4,7 +4,7 @@ Created on: 22/01/2020
 """
 
 
-class GraphNode:
+class GraphNode(object):
     def __init__(self, value):
         self.value = value
         self.children = []

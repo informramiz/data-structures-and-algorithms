@@ -8,18 +8,19 @@ from asserts.asserts import assert_
 
 def tests():
     graph = Graph()
-    node1 = GraphNode('A')
-    node2 = GraphNode("B")
-    node3 = GraphNode("C")
+    nodeA = GraphNode('A')
+    nodeB = GraphNode("B")
+    nodeC = GraphNode("C")
 
-    graph.add_node(node1)
-    graph.add_node(node2)
-    graph.add_node(node3)
+    graph.add_node(nodeA)
+    graph.add_node(nodeB)
+    graph.add_node(nodeC)
 
-    graph.add_edge(node1, node3)
-    graph.add_edge(node2, node3)
+    graph.add_edge(nodeA, nodeC)
+    graph.add_edge(nodeB, nodeC)
 
     assert_(expected=['A', 'C', 'B'], actual=graph.BFS_traversal())
+    assert_(expected=nodeB, actual=graph.BFS_search('B'))
 
 
 tests()

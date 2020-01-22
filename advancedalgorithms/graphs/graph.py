@@ -52,3 +52,25 @@ class Graph:
                     queue.append(child)
 
         return visited_nodes_order
+
+    def BFS_search(self, key):
+        if len(self.nodes) == 0:
+            return None
+
+        queue = []
+        visited = {}
+
+        root = self.nodes[0]
+        queue.append(root)
+
+        while len(queue) > 0:
+            node = queue.pop(0)
+            if node.value == key:
+                return node
+
+            visited[node.value] = True
+            for child in node.children:
+                if visited.get(child.value) is None:
+                    queue.append(child)
+
+        return None
