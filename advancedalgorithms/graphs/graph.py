@@ -117,6 +117,45 @@ class Graph:
     def is_empty(self):
         return len(self.nodes) == 0
 
+    def DFS_search_iterative(self, key):
+        if self.is_empty():
+            return None
+
+        stack = []
+        visited_nodes_order = []
+        is_visited = {}
+
+        root = self.nodes[0]
+        if root.value == key:
+            return root
+
+        is_visited[root] = True
+        stack.append((root, 0))
+
+        while len(stack) > 0:
+            parent, next_child_index = stack.pop()
+
+            if next_child_index >= len(parent.children):
+                continue
+
+            # push parent current state (for backtracking) so that we can check remaining children after flow
+            # returns from checking next_child.children
+            stack.append((parent, next_child_index + 1))
+
+            next_child = parent.children[next_child_index]
+            if is_visited.get(next_child) is not None:
+                continue
+
+            if next_child.value == key:
+                return next_child
+
+            is_visited[next_child] = True
+
+            # add next_child to the stack so that we can check it's children
+            stack.append((next_child, 0))
+
+        return visited_nodes_order
+
     def __DFS_traversal_recursive(self, node, is_visited={}):
         if not node:
             return []
@@ -130,3 +169,24 @@ class Graph:
 
         return visited_nodes_order
 
+    def DFS_search_recursive(self, key):
+        if self.is_empty():
+            return None
+
+        return self.__DFS_search_recursive(self.nodes[0], key)
+
+    def __DFS_search_recursive(self, node, key, is_visited={}):
+        if not node:
+            return None
+
+        if node.value == key:
+            return node
+
+        is_visited[node] = True
+        for child in node.children:
+            if is_visited.get(child) is None:
+                result_node = self.__DFS_search_recursive(child, key, is_visited)
+                if result_node is not None:
+                    return result_node
+
+        return None

@@ -28,5 +28,8 @@ def tests():
     assert_(expected=["A", "C", "B", "AA"], actual=graph.DFS_traversal_iterative())
     assert_(expected=["A", "C", "B", "AA"], actual=graph.DFS_traversal_recursive())
 
+    assert_(expected=nodeB, actual=graph.DFS_search_iterative('B'))
+    assert_(expected=nodeB, actual=graph.DFS_search_recursive('B'))
+
 
 tests()
