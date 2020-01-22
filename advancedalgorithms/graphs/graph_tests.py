@@ -25,7 +25,7 @@ def tests():
     assert_(expected=['A', 'C', "AA", 'B'], actual=graph.BFS_traversal())
     assert_(expected=nodeB, actual=graph.BFS_search('B'))
 
-    assert_(expected=["A", "C", "B", "AA"], actual=graph.DFS_traversal())
+    assert_(expected=["A", "C", "B", "AA"], actual=graph.DFS_traversal_iterative())
 
 
 tests()

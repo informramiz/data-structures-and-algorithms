@@ -75,7 +75,7 @@ class Graph:
 
         return None
 
-    def DFS_traversal(self):
+    def DFS_traversal_iterative(self):
         if len(self.nodes) == 0:
             return []
 
@@ -109,3 +109,4 @@ class Graph:
             stack.append((next_child, 0))
 
         return visited_nodes_order
+
