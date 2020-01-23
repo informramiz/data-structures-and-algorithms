@@ -83,20 +83,23 @@ class DijkstraNode(object):
         return f"({self.node}, {self.weight})"
 
 
-def dijkstra(graph, start_node, end_node):
+def dijkstra(start_node, end_node):
     if start_node == end_node:
         return [start_node, end_node]
 
     min_queue = PriorityQueue()
     min_queue.put_nowait(DijkstraNode(start_node, 0))
 
-    path = []
+    # other variables to run Dijkstra algo
+    nodes_selection_order = []
     is_selected = {}
-    weights = {}
-    total_distance = 0
+    weights = {start_node: 0}
+
+    # dictionary to keep track of which parent was the latest to update which node, this will help in
+    # extracting path information at the end
+    parent = {}
 
     # set the weight of start node as 0
-    weights[start_node] = 0
     while not min_queue.empty():
         # get the next min node and it's weight
         selected_node, selected_node_weight = min_queue.get_nowait()
@@ -113,31 +116,50 @@ def dijkstra(graph, start_node, end_node):
             return None
 
         # mark this node as selected into the path and add it to path
-        total_distance = selected_node_weight
         is_selected[selected_node] = True
-        path.append(selected_node.value)
+        nodes_selection_order.append(selected_node.value)
 
         if selected_node == end_node:
             # we have found the destination_node so path is found so return it
-            return path, total_distance
+            path = build_path(parent, start_node, end_node)
+            return path, selected_node_weight
 
         # go through all the adjacent edges/nodes from selected_node and update their weights if needed
-        for edge in selected_node.edges:
-            if is_selected.get(edge.node):
-                # selected nodes are already part of path and can't be visited now
-                continue
-
-            new_weight = selected_node_weight + edge.distance
-            if weights.get(edge.node, math.inf) == math.inf:
-                # edge.node has not been visited yet so set it's weight
-                weights[edge.node] = new_weight
-                min_queue.put_nowait(DijkstraNode(edge.node, new_weight))
-            else:
-                # edge.node has been visited before so check if it's weight can minimized by taking path
-                # from selected_node
-                prev_weight = weights[edge.node]
-                if prev_weight > new_weight:
-                    weights[edge.node] = new_weight
-                    min_queue.put_nowait(DijkstraNode(edge.node, new_weight))
+        update_adjacent_nodes_weights(is_selected, min_queue, parent, selected_node, selected_node_weight, weights)
 
     return None
+
+
+def update_adjacent_nodes_weights(is_selected, min_queue, parent, selected_node, selected_node_weight, weights):
+    # go through all the adjacent edges/nodes from selected_node and update their weights if needed
+    for edge in selected_node.edges:
+        if is_selected.get(edge.node):
+            # selected nodes are already part of path and can't be visited now
+            continue
+
+        new_weight = selected_node_weight + edge.distance
+        if weights.get(edge.node, math.inf) == math.inf:
+            # edge.node has not been visited yet so set it's weight
+            weights[edge.node] = new_weight
+            parent[edge.node] = selected_node
+            min_queue.put_nowait(DijkstraNode(edge.node, new_weight))
+        else:
+            # edge.node has been visited before so check if it's weight can minimized by taking path
+            # from selected_node
+            prev_weight = weights[edge.node]
+            if prev_weight > new_weight:
+                weights[edge.node] = new_weight
+                parent[edge.node] = selected_node
+                min_queue.put_nowait(DijkstraNode(edge.node, new_weight))
+
+
+def build_path(parent, start_node, end_node):
+    path = [end_node.value]
+    current_parent = parent[end_node]
+    while current_parent != start_node:
+        path.append(current_parent.value)
+        current_parent = parent[current_parent]
+
+    path.append(start_node.value)
+    path.reverse()
+    return path
