@@ -35,5 +35,8 @@ def tests():
     graph.add_edge(node_y, node_i, 4)
     graph.add_edge(node_y, node_t, 5)
 
+    # dijkstra(graph, node_u, node_y)
+    print('Shortest Distance from {} to {} is {}'.format(node_u.value, node_y.value, dijkstra(graph, node_u, node_y)))
+
 
 tests()
