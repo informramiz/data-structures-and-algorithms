@@ -11,6 +11,9 @@ class Edge(object):
         self.node = node
         self.distance = distance
 
+    def __repr__(self):
+        return f"({self.node}, {self.distance})"
+
 
 class GraphNode(object):
     def __init__(self, value):
@@ -33,6 +36,9 @@ class GraphNode(object):
 
         if node_edge:
             self.edges.remove(node_edge)
+
+    def __repr__(self):
+        return str(self.value)
 
 
 class Graph(object):
@@ -73,6 +79,9 @@ class DijkstraNode(object):
         yield self.node
         yield self.weight
 
+    def __repr__(self):
+        return f"({self.node}, {self.weight})"
+
 
 def dijkstra(graph, start_node, end_node):
     if start_node == end_node:
@@ -91,6 +100,12 @@ def dijkstra(graph, start_node, end_node):
     while not min_queue.empty():
         # get the next min node and it's weight
         selected_node, selected_node_weight = min_queue.get_nowait()
+
+        if is_selected.get(selected_node):
+            # this is to avoid duplication because I am not removing nodes from min_queue when updating
+            # their weights (I just add a new DijkstraNode with new weight) so there will be duplicates
+            # but overall distance calculation will not be affected
+            continue
 
         # we have exhausted all the reachable nodes but did not find the destination node
         # that means there is no path from start_node to end_node
