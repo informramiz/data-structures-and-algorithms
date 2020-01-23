@@ -98,7 +98,7 @@ def dijkstra(graph, start_node, end_node):
             return None
 
         # mark this node as selected into the path and add it to path
-        total_distance += selected_node_weight
+        total_distance = selected_node_weight
         is_selected[selected_node] = True
         path.append(selected_node.value)
 
