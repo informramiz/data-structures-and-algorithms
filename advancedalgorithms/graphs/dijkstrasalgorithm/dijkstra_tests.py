@@ -26,8 +26,26 @@ def tests():
     graph.add_edge(node_i, node_y, 4)
     graph.add_edge(node_t, node_y, 5)
 
-    output = dijkstra(node_u, node_y)
-    print('Shortest Distance of ({} --> {}) is {} and path is {}'.format(node_u.value, node_y.value, output[1], output[0]))
+    # Test-1
+    start_node = node_u
+    end_node = node_y
+    output = dijkstra(start_node, end_node)
+    end_node_value = None
+    if end_node is not None:
+        end_node_value = end_node.value
+    print('Shortest Distance of ({} --> {}) is {} and path is {}'
+          .format(start_node.value, end_node_value, output[1], output[0]))
+    assert_(expected=(['U', 'C', 'I', 'Y'], 14), actual=output)
+
+    # Test-2
+    start_node = node_u
+    end_node = None
+    output = dijkstra(start_node, end_node)
+    end_node_value = None
+    if end_node is not None:
+        end_node_value = end_node.value
+    print('Shortest Distance of ({} --> {}) is {} and path is {}'
+          .format(start_node.value, end_node_value, output[1], output[0]))
     assert_(expected=(['U', 'C', 'I', 'Y'], 14), actual=output)
 
 

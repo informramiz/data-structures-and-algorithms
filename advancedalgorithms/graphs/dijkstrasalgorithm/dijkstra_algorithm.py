@@ -83,7 +83,7 @@ class DijkstraNode(object):
         return f"({self.node}, {self.weight})"
 
 
-def dijkstra(start_node, end_node):
+def dijkstra(start_node, end_node=None):
     if start_node == end_node:
         return [start_node, end_node]
 
@@ -93,7 +93,8 @@ def dijkstra(start_node, end_node):
     # other variables to run Dijkstra algo
     nodes_selection_order = []
     is_selected = {}
-    weights = {start_node: 0}
+    selected_node, selected_node_weight = start_node, 0
+    weights = {selected_node: selected_node_weight}
 
     # dictionary to keep track of which parent was the latest to update which node, this will help in
     # extracting path information at the end
@@ -119,7 +120,7 @@ def dijkstra(start_node, end_node):
         is_selected[selected_node] = True
         nodes_selection_order.append(selected_node.value)
 
-        if selected_node == end_node:
+        if end_node and selected_node == end_node:
             # we have found the destination_node so path is found so return it
             path = build_path(parent, start_node, end_node)
             return path, selected_node_weight
@@ -127,7 +128,14 @@ def dijkstra(start_node, end_node):
         # go through all the adjacent edges/nodes from selected_node and update their weights if needed
         update_adjacent_nodes_weights(is_selected, min_queue, parent, selected_node, selected_node_weight, weights)
 
-    return None
+    if end_node:
+        return None
+    else:
+        # there is no end node
+        if end_node is None:
+            end_node = selected_node
+        path = build_path(parent, start_node, end_node)
+        return path, selected_node_weight
 
 
 def update_adjacent_nodes_weights(is_selected, min_queue, parent, selected_node, selected_node_weight, weights):
