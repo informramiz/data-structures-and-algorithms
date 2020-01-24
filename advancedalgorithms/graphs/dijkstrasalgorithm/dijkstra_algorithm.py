@@ -40,11 +40,17 @@ class GraphNode(object):
     def __repr__(self):
         return str(self.value)
 
+    def __eq__(self, other):
+        return other and self.value == other.value
+
+    def __hash__(self):
+        return str(self.value).__hash__()
+
 
 class Graph(object):
     def __init__(self, nodes_list=None):
         if nodes_list is None:
-            nodes_list = []
+            nodes_list = set()
         self.nodes = nodes_list
 
     def is_empty(self):
@@ -54,7 +60,8 @@ class Graph(object):
         return len(self.nodes)
 
     def add_node(self, node):
-        self.nodes.append(node)
+        if node not in self.nodes:
+            self.nodes.add(node)
 
     def add_edge(self, node1: GraphNode, node2: GraphNode, distance):
         if node1 in self.nodes and node2 in self.nodes:
