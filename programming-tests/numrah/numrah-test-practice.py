@@ -15,17 +15,22 @@ Output: 1,4,13
 Input: ["1, 3, 9, 10, 17, 18", "1, 4, 9, 10"]
 Output: 1,9,10
 """
+from asserts.asserts import assert_
+
 
 def find_intersection(string):
     str1 = string[0]
     str2 = string[1]
-    set1 = set(str1.split(","))
-    set2 = set(str2.split(","))
-    intersection = set2.intersection(set1)
-    int_list = [int(i) for i in intersection]
-    return sorted(int_list)
+    set1 = set([int(i) for i in str1.split(", ")])
+    set2 = set([int(i) for i in str2.split(", ")])
+    intersection = sorted(set2.intersection(set1))
+
+    if len(intersection) == 0:
+        return "false"
+
+    return ",".join(map(str, intersection))
 
 
 input1 = ["1, 3, 4, 7, 13", "1, 2, 4, 13, 15"]
 output = find_intersection(input1)
-assert (output == [1, 4, 13])
+assert_("1,4,13", output)
